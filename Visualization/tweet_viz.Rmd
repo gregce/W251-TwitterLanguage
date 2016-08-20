@@ -1,0 +1,179 @@
+---
+title: "Twitter Language Explorer (W251)"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+#############################
+## Load Relevant Libraries
+#############################
+
+# CLEAR WORKSPACE
+rm(list=ls())
+
+# LOAD LIBRARIES
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(cowplot)
+library(plotly)
+library(stringr)
+library(scales)
+
+options(scipen=10000)
+
+#############################
+## Load data for Server
+#############################
+#setwd("~/MIDS/DATASCI_W251/build_tweet_viz")
+
+load("optimized_for_viz.Rda")
+
+#############################
+## Functions 
+#############################
+
+
+```
+
+Filters {.sidebar}
+=======================================================================
+
+#### Universal Filters
+
+```{r}
+
+sliderInput("sentiment", label = h6("Average Sentiment"), min = min(optimized_for_viz$avg_sentiment), 
+        max = max(optimized_for_viz$avg_sentiment), value = c(min(optimized_for_viz$avg_sentiment), max(optimized_for_viz$avg_sentiment))
+        , round = FALSE
+        , step = .5)
+
+sliderInput("tweetlength", label = h6("Tweet Length"), min = 0, 
+        max = 140, value = c(0, 140))
+
+sliderInput("emoticons", label = h6("Emoticon Count"), min = 0, 
+        max = max(optimized_for_viz$emoticon_count), value = c(0, max(optimized_for_viz$emoticon_count)))
+
+sliderInput("friendcount", label = h6("User Friend Count"), min = 0, 
+        max = max(optimized_for_viz$friends_count), value = c(0, max(optimized_for_viz$friends_count)))
+
+sliderInput("followercount", label = h6("User Follower Count"), min = min(optimized_for_viz$followers_count), 
+        max = max(optimized_for_viz$followers_count), value = c(min(optimized_for_viz$followers_count), max(optimized_for_viz$followers_count)))
+
+filtered <- reactive(optimized_for_viz %>%
+    filter(total_chars >= input$tweetlength[1] &
+           total_chars <= input$tweetlength[2],
+           emoticon_count >=  input$emoticons[1] &
+           emoticon_count <= input$emoticons[2],
+           avg_sentiment >=  input$sentiment[1] &
+           avg_sentiment <= input$sentiment[2],
+           friends_count >=  input$friendcount[1] &
+           friends_count <= input$friendcount[2],
+           followers_count >=  input$followercount[1] &
+           followers_count <= input$followercount[2]
+           )
+)
+
+```
+
+
+
+Stats {data-icon="fa-twitter"}
+=====================================================================
+
+Row {data-height=500}
+-----------------------------------------------------------------------
+
+### Tweets by Time of Day
+
+```{r}
+
+plotlyOutput("main")
+
+output$main <- renderPlotly(ggplot(filtered(), aes(x = timeonly)) +
+  geom_histogram(aes(fill = ..count..)) +
+  #cowplot::theme_cowplot() +
+  theme(legend.position = "none", text = element_text(size=8)) +
+  xlab("Time") + ylab("Number of tweets") + 
+  scale_x_datetime(breaks = date_breaks("3 hours"), 
+                   labels = date_format("%H:00")) +
+  scale_fill_gradient(low = "midnightblue", high = "aquamarine4"))
+
+```
+
+Row {data-height=500}
+------------------------------------------------------------------------------
+
+### Length vs. Emoticons
+
+```{r}
+
+plotlyOutput("hex_bin_output")
+
+output$hex_bin_output <- renderPlotly(ggplot(filtered(), aes(x = emoticon_count, y = total_chars)) + 
+  stat_binhex() + 
+  theme(text = element_text(size=8)) +
+  ylab("Number of Characters in Tweet") + xlab("Number of Emoticons in Tweet") +
+  scale_fill_gradient(low = "midnightblue", high = "aquamarine4")
+
+)
+
+```
+
+### Tweet Type
+
+```{r}
+
+plotlyOutput("box_plot_output")
+
+output$box_plot_output <- renderPlotly(ggplot(filtered(), aes(x = type, y = total_chars))  +
+  geom_boxplot(aes(fill=type)) +
+  scale_fill_manual(values = c("midnightblue","aquamarine4", "aquamarine")) +
+  guides(fill=FALSE) +  
+  coord_flip() +
+  theme(text = element_text(size=10)) +
+  ylab("Number of Characters in Tweet") + xlab("Type of Tweet"))
+
+
+```
+
+
+Sentiment Analysis {data-icon="fa-language"}
+=======================================================================
+
+Row {data-height=50}
+-----------------------------------------------------------------------
+### Filter {.no-title}
+
+```{r}
+radioButtons("drilldown", label = "Drilldown"
+              ,choices = list("Time Zone" = "time_zone"
+                           , "Type" = "type"
+                           , "Weekday" = "wday"
+                           , "Month" = "month"
+                           )
+             , selected = "time_zone"
+             , inline = TRUE)
+
+```
+
+Row
+-----------------------------------------------------------------------
+### Facet Wraps
+
+```{r}
+
+plotlyOutput("sentplot")
+
+output$sentplot <- renderPlotly(ggplot(filtered(), aes(x = avg_sentiment)) +
+  geom_bar(aes(fill = ..count..)) +
+  facet_wrap(as.formula(paste("~", input$drilldown))) +
+  scale_y_log10() +
+  theme(legend.position = "none", text = element_text(size=8)) +
+  scale_fill_gradient(low = "midnightblue", high = "aquamarine4"))
+
+```
+
