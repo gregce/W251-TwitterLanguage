@@ -1,7 +1,5 @@
-## creating a key space
-create keyspace twitter with replication = {'class':'SimpleStrategy','replication_factor':1};
 
-## creating a table to hold all of our tweets
+## creating a keyspace 
  CREATE KEYSPACE twitter_final
   WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'dc1' : 2};
 
