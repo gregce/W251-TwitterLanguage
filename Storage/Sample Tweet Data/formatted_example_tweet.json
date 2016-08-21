@@ -1,0 +1,81 @@
+{  
+   "id_str":"164966279676035072",
+   "text":"Samsung Galaxy S3 Samsung akn diluncurkan pd acara MWC 2012 event!  http:\/\/t.co\/wPzumeR6",
+   "retweeted":false,
+   "in_reply_to_status_id_str":null,
+   "created_at":"Thu Feb 02 07:00:00 +0000 2012",
+   "in_reply_to_status_id":null,
+   "in_reply_to_user_id_str":null,
+   "coordinates":null,
+   "source":"web",
+   "retweet_count":0,
+   "in_reply_to_screen_name":null,
+   "truncated":false,
+   "entities":{  
+      "user_mentions":[  
+
+      ],
+      "hashtags":[  
+
+      ],
+      "urls":[  
+         {  
+            "display_url":"pocket-lint.com\/news\/44030\/sam\u2026",
+            "indices":[  
+               68,
+               88
+            ],
+            "expanded_url":"http:\/\/www.pocket-lint.com\/news\/44030\/samsung-galaxy-s-iii-picture",
+            "url":"http:\/\/t.co\/wPzumeR6"
+         }
+      ]
+   },
+   "contributors":null,
+   "place":null,
+   "geo":null,
+   "in_reply_to_user_id":null,
+   "possibly_sensitive_editable":true,
+   "possibly_sensitive":false,
+   "user":{  
+      "id_str":"270706488",
+      "contributors_enabled":false,
+      "verified":false,
+      "notifications":null,
+      "profile_use_background_image":true,
+      "created_at":"Wed Mar 23 03:16:44 +0000 2011",
+      "profile_text_color":"303233",
+      "default_profile_image":false,
+      "profile_background_image_url":"http:\/\/a0.twimg.com\/profile_background_images\/414846946\/profile-picture_4.jpg",
+      "description":"Fun88 Dimana Mimpi Menjadi Kenyataan! \r\nLIKE-www.facebook.com\/fun88.indo",
+      "show_all_inline_media":true,
+      "favourites_count":4,
+      "profile_link_color":"b51d1d",
+      "url":"http:\/\/www.fun88.com",
+      "lang":"en",
+      "statuses_count":2035,
+      "time_zone":"Jakarta",
+      "profile_background_color":"ffffff",
+      "geo_enabled":false,
+      "profile_background_tile":false,
+      "profile_background_image_url_https":"https:\/\/si0.twimg.com\/profile_background_images\/414846946\/profile-picture_4.jpg",
+      "protected":false,
+      "listed_count":1,
+      "profile_sidebar_fill_color":"739e9c",
+      "profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/1628420603\/twitterThumbFun88-100x100_normal.jpg",
+      "location":"",
+      "screen_name":"Fun88Indo",
+      "name":"Fun88 Indonesia",
+      "is_translator":false,
+      "following":null,
+      "friends_count":65,
+      "id":270706488,
+      "default_profile":false,
+      "follow_request_sent":null,
+      "utc_offset":25200,
+      "profile_sidebar_border_color":"e6e6e6",
+      "followers_count":124,
+      "profile_image_url":"http:\/\/a2.twimg.com\/profile_images\/1628420603\/twitterThumbFun88-100x100_normal.jpg"
+   },
+   "id":164966279676035072,
+   "favorited":false
+}
