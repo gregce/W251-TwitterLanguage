@@ -7,6 +7,9 @@ The folder structure for this repository is as follows:
  - [**Visualization**](https://github.com/gregce/W251-TwitterLanguage/tree/master/Visualization): Final datafile + .Rmd file used to visualize our results
  - [**Project Assets**](https://github.com/gregce/W251-TwitterLanguage/tree/master/Project_Assets): Hard copies (pdfs) of our final project presentation, whitepaper & screenshots of our running cluster 
 
+# Our final viz
+![http://192.155.215.11:3838/w251/](https://github.com/gregce/W251-TwitterLanguage/Viz.png)
+
 # Public version of this source code
 This repo is a public version of the source code for the Twitter Lang app. The final app is built with R, JavaScript and Shiny and is based on data initially loaded and sourced from a 9 node cassandra cluster. If you got this far, we have to assume you can look after yourself with R and navigating this GitHub repo; we can’t give detailed guidance or help.
 
