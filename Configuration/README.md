@@ -23,7 +23,6 @@ for i in $nodeid; do
 - Public Key Authentication: From the client machine, we run `ssh-keygen` to generate a keypair
 - We use `ssh-copy-id mids@p1` to copy our public key to our remote servers... repeat this process for each server
 
-
 # Remote Node Configuration
 ### Initial Config
 To be completed on each node via csshX:
@@ -45,7 +44,6 @@ To be completed on each node via csshX:
 - Public Key Authentication Between Servers: From the p1, we run `ssh-keygen` to generate a keypair
 - We use `ssh-copy-id mids@p1` to copy our public key to our remote servers... repeat this process for each server. We can then test that each server can communicate with each other by attempting to SSH from p1 to p2 for example.
 
- 
 ### 100G Disk Formatting
 * You need to find out the name of our disk, e.g
         fdisk -l |grep Disk |grep GB
@@ -92,16 +90,66 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.60-b23, mixed mode)
     - Updating the package repo:
     - `sudo apt-get update`
     - Installing: `sudo apt-get install cassandra`
-- Once that is completed on each node, one must
+    
+- Once that is completed on each node, one must do the following to set up the multi node cluster
+  - Step 1: Stop the service on each machine `sudo service cassandra stop`
+  - Step 2: Delete default data `sudo rm -rf /var/lib/cassandra/data/system/*`
+  - Step 3: Update / modify the `cassandra.yaml` with your specifics:
+  - We did the following:
+  ````
+  cluster_name: 'MIDS Cluster'
 
+  seed_provider:
+  - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+    parameters: 
+     - seeds: p1, p2, p3
+     
+    listen_address: p1
 
-  
-  
-**Installing Anaconda**
+    rpc_address: p1
+    
+    endpoint_snitch: GossipingPropertyFileSnitch
+    
+    auto_bootstrap: false```
+- Once these parameters were set on each of the machines, the cluster was restarted (one machine at a time) and the nodes begun to communicate with one another
 
+**Installing Anaconda & Other Python Requirements**
+
+Anaconda is a customer python distribution that comes prepackaged with a number libraries that make scientific computation easy. We completed the following steps and ran the following commands (on specific nodes):
+- `wget http://repo.continuum.io/archive/Anaconda2-4.1.1-Linux-x86_64.sh`
+- `bash Anaconda2-4.1.1-Linux-x86_64.sh`
+- Once that was completed, you need to check that Anaconda is added to your path:
+`sudo nano .profile`
+- Finally we made sure to install the `cassandra-driver` using PIP: `pip install cassandra-driver`
+
+We also set up a notebook server on P1 by doing the following:
+- Run tmux ls to see the sessions
+- Attach the session via "tmux attach" -- restart the server if necessary using the command : `IPYTHON_OPTS="notebook --no-browser" $SPARK_HOME/bin/pyspark`
+- This made the notebook server accessible from a local client via the following: `ssh -NL 8157:localhost:8888 mids@192.155.215.14` 
+- Once could then point there browser to `http://localhost:8157` to work on the remote node
 
 **Installing & Configuring Spark**
 
+To do this, we mostly followed the steps outlined [here](https://github.com/MIDS-scaling-up/coursework/tree/master/week6/hw/apache_spark_introduction)
+- Step 1: Download and install a prebuilt version on each machine: `curl http://www.gtlib.gatech.edu/pub/apache/spark/spark-1.6.1/spark-1.6.1-bin-hadoop2.6.tgz | tar -zx -C /usr/local --show-transformed --transform='s,/*[^/]*,spark,'
+`
+- Step 2: We set SPARK_HOME: `echo export SPARK_HOME=\"/usr/local/spark\" >> /root/.bash_profile
+source /root/.bash_profile`
+- Step 3: We configure Spark by setting the slaves file appropriately with directives for each of the slave nodes
+- Step 4: We start the service from the master node: `bash $SPARK_HOME/sbin/start-all.sh`
 
 **Installing Shiny Server**
+
+We use Shiny server to serve our visualization on P4. In order to get this configured up and running, we followed the below steps JUST for P4:
+- Step 1: Install R Language `sudo apt-get -y install r-base`
+- Step 2: Install Shiny `sudo su - -c "R -e \"install.packages('shiny', repos='http://cran.rstudio.com/')\""`
+- Step 3: Get tools to install from gdebi `sudo apt-get install gdebi-core`
+- Step 4: Download shiny server: `wget -O shiny-server.deb http://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.3.0.403-amd64.deb
+`
+Step 5: Use gdebi to install `sudo gdebi shiny-server.deb`
+
+At this point the process gets started automatically and is accessible from port 3838 on the server.
+
+
+
 
