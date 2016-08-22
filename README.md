@@ -4,7 +4,7 @@ The folder structure for this repository is as follows:
  - **Configuration**: Details instructions used to set up our 9 Ubuntu nodes 
  - **Storage**: Provides loading details + DDL for our cassandra key stores
  - **Exploration**: Source code for data extraction and exploration in python and R
- - **Visualization**: Final datafile + .Rmd file used to visualize our resutls
+ - **Visualization**: Final datafile + .Rmd file used to visualize our results
  - **Project Assets**: Hard copies (pdfs) of our final project presentation, whitepaper & screenshots of our running cluster 
 
 # Public version of this source code
