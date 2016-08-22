@@ -44,7 +44,8 @@ To be completed on each node via csshX:
 - As root, run this command to add your new user to the sudo group: `gpasswd -a demo sudo`
 - Public Key Authentication Between Servers: From the p1, we run `ssh-keygen` to generate a keypair
 - We use `ssh-copy-id mids@p1` to copy our public key to our remote servers... repeat this process for each server. We can then test that each server can communicate with each other by attempting to SSH from p1 to p2 for example.
-- 
+
+ 
 ### 100G Disk Formatting
 * You need to find out the name of our disk, e.g
         fdisk -l |grep Disk |grep GB
