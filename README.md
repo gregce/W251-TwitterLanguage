@@ -7,7 +7,8 @@ The folder structure for this repository is as follows:
  - [**Visualization**](https://github.com/gregce/W251-TwitterLanguage/tree/master/Visualization): Final datafile + .Rmd file used to visualize our results
  - [**Project Assets**](https://github.com/gregce/W251-TwitterLanguage/tree/master/Project_Assets): Hard copies (pdfs) of our final project presentation, whitepaper & screenshots of our running cluster 
 
-# Our final viz
+# Tweet Language Explorer
+Accessible [here](https://gregce.shinyapps.io/tweet_viz/)
 ![http://192.155.215.11:3838/w251/](https://github.com/gregce/W251-TwitterLanguage/blob/master/Viz.png)
 
 # Public version of this source code
