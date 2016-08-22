@@ -96,7 +96,8 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.60-b23, mixed mode)
   - Step 2: Delete default data `sudo rm -rf /var/lib/cassandra/data/system/*`
   - Step 3: Update / modify the `cassandra.yaml` with your specifics:
   - We did the following:
-  ```
+ 
+ ```
   cluster_name: 'MIDS Cluster'
 
   seed_provider:
@@ -110,7 +111,8 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.60-b23, mixed mode)
     
     endpoint_snitch: GossipingPropertyFileSnitch
     
-    auto_bootstrap: false```
+    auto_bootstrap: false
+```
 
 - Once these parameters were set on each of the machines, the cluster was restarted (one machine at a time) and the nodes begun to communicate with one another
 
